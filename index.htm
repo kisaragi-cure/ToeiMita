@@ -588,15 +588,15 @@ background-color: #ffffff;
 <div style="position: absolute; top: 5590px; left:105px; color:#ffffff; font-size:12pt"><p>白金高輪北行発車順序</p></div>
 <div id="ti26dep11" style="position: absolute; top: 5630px; left:115px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti26dep12" style="position: absolute; top: 5630px; left:155px; color:#ffffff; font-size:12pt; "></div>
-<div id="ti26dep13" style="position: absolute; top: 5630px; left:235px; color:#ffffff; font-size:12pt; ">調整中</div>
+<div id="ti26dep13" style="position: absolute; top: 5630px; left:235px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti26dep14" style="position: absolute; top: 5630px; left:285px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti26dep15" style="position: absolute; top: 5630px; left:335px; color:#ffff00; font-size:12pt; "></div>
 
-<div id="ti26dep21" style="position: absolute; top: 190px; left:670px; color:#ffffff; font-size:12pt; "></div>
-<div id="ti26dep22" style="position: absolute; top: 190px; left:710px; color:#ffffff; font-size:12pt; "></div>
-<div id="ti26dep23" style="position: absolute; top: 190px; left:790px; color:#ffffff; font-size:12pt; "></div>
-<div id="ti26dep24" style="position: absolute; top: 190px; left:840px; color:#ffffff; font-size:12pt; "></div>
-<div id="ti26dep25" style="position: absolute; top: 190px; left:890px; color:#ffff00; font-size:12pt; "></div>
+<div id="ti26dep21" style="position: absolute; top: 5655px; left:115px; color:#ffffff; font-size:12pt; "></div>
+<div id="ti26dep22" style="position: absolute; top: 5655px; left:155px; color:#ffffff; font-size:12pt; "></div>
+<div id="ti26dep23" style="position: absolute; top: 5655px; left:235px; color:#ffffff; font-size:12pt; "></div>
+<div id="ti26dep24" style="position: absolute; top: 5655px; left:285px; color:#ffffff; font-size:12pt; "></div>
+<div id="ti26dep25" style="position: absolute; top: 5655px; left:335px; color:#ffff00; font-size:12pt; "></div>
 <div style="position: absolute; top: 5680px; left:105px; color:#ff0000;  font-size:11pt"><p>※時刻表に掲載の内容で表示しています。</p></div>
 
 <div style="position: absolute; top: 5750px; left:1000px; font-size:18pt"><p>　</p></div>
@@ -627,6 +627,16 @@ request3.onload = () => {
   if (request3.readyState === request3.DONE) {
     if (request3.status === 200) {
 var data3 = JSON.parse(request3.responseText.replaceAll("odpt:","odpt"));
+
+var request4 = new XMLHttpRequest();
+request4.open("GET", "https://api-public.odpt.org/api/v4/odpt:StationTimetable?odpt:station=odpt.Station:Toei.Mita.ShirokaneTakanawa", true);
+request4.responseType = "text";
+
+request4.onload = () => {
+  if (request4.readyState === request3.DONE) {
+    if (request4.status === 200) {
+var data5 = JSON.parse(request4.responseText.replaceAll("odpt:","odpt"));
+console.log(data5);
 
 
 //在線情報の処理
@@ -728,8 +738,10 @@ now = now.getHours();
 	var desn = {};
 if ( day > 0 && day < 6 ) {
       var data4= JSON.parse(JSON.stringify(data3[0].odptstationTimetableObject)); 
+      var data6= JSON.parse(JSON.stringify(data5[1].odptstationTimetableObject)); 
 } else {
       var data4= JSON.parse(JSON.stringify(data3[1].odptstationTimetableObject)); 
+      var data6= JSON.parse(JSON.stringify(data5[0].odptstationTimetableObject)); 
 }
       len3 = JSON.stringify(data4.length) ;
 if ( len3 - m > 100 && timesec != 4 ){
@@ -749,7 +761,50 @@ for ( m = m; m < len3; m++) {
 	desn[dest1] = dest4;
 }
 
+//白高北行発車
+	let kind5 = '';
+	let des5 = '';
+	let dep5 = '';
+	let num5 = '';
+	let ptf5 = '';
 
+	let kind6 = '';
+	let des6 = '';
+	let dep6 = '';
+	let num6 = '';
+	let ptf6 = '';
+
+
+m = p;
+      len3 = JSON.stringify(data6.length) ;
+	var desta = {};
+	var newkinda = {};
+	var kindna = {};
+	var desna = {};
+	var index = {};
+	var from = {};
+
+for ( m = m; m < len3; m++) {
+	var dest1 = JSON.stringify(data6[m].odpttrainNumber); 
+try {
+  var dest2 = JSON.stringify(data6[m].odptplatformNumber);
+} catch (error) {
+  var dest2 = '"0"';
+}  
+if ( dest2 == undefined ){
+  dest2 = '"0"';
+}
+	var dest3 = JSON.stringify(data6[m].odptdepartureTime); 
+	var dest4 = JSON.stringify(data6[m].odptdestinationStation); 
+	var dest5 = JSON.stringify(data6[m].odpttrainType); 
+
+	index[dest1] = m + 1;
+	desta[m] = dest1;
+	from[m] = dest2;
+	newkinda[m] = dest3;
+	kindna[m] = dest5;
+	desna[m] = dest4;
+}
 
 
 
@@ -1017,7 +1072,6 @@ if (dest[unban2] == undefined ) {
 	unban2 = '"' + unban2a + unban2b + unban2c +  'a"';
 }
 
-console.log(unban2);
 } else {
 unban2 = unban1;
 }
@@ -1537,16 +1591,12 @@ case ('"odpt.Station:Toei.Mita.Motohasunuma"'):
 	if ( trid == '"odpt.RailDirection:Northbound"' ) {
 		nameText = document.getElementById('ti08-2a');
 		target = document.getElementById('ti08-2ad');
-		target.style.left = '1320px' ;
-		target.style.top = '570px' ;
 		doc2= document.getElementById("ti08-2"); 
 		doc0= document.getElementById("ti08-2b");  
 		doc1= document.getElementById("ti08-2c");  
 	} else {
 		nameText = document.getElementById('ti08-1a');
 		target = document.getElementById('ti08-1ad');
-		target.style.left = '1320px' ;
-		target.style.top = '530px' ;
 		doc2= document.getElementById("ti08-1"); 
 		doc0= document.getElementById("ti08-1b");  
 		doc1= document.getElementById("ti08-1c");  
@@ -2105,6 +2155,22 @@ case ('"odpt.Station:Toei.Mita.Onarimon"'):
 		doc2= document.getElementById("ti22-2"); 
 		doc0= document.getElementById("ti22-2b");  
 		doc1= document.getElementById("ti22-2c");  
+
+	if ( index[unban1] != undefined){
+		if ( kind5 == '' ){
+		kind5 = kindna[index[unban1]].replaceAll('"','');
+		des5 = desna[index[unban1]].replaceAll('"','');
+		dep5 = newkinda[index[unban1]].replaceAll('"','');
+		num5 = desta[index[unban1]].replaceAll('"','');
+		ptf5 = from[index[unban1]].replaceAll('"','');
+
+		kind6 = kindna[index[unban1] +1 ].replaceAll('"','');
+		des6 = desna[index[unban1] +1 ].replaceAll('"','');
+		dep6 = newkinda[index[unban1] +1 ].replaceAll('"','');
+		num6 = desta[index[unban1] +1 ].replaceAll('"','');
+		ptf6 = from[index[unban1] +1 ].replaceAll('"','');
+		}
+	}
 	} else {
 		nameText = document.getElementById('ti22-1a');
 		target = document.getElementById('ti22-1ad');
@@ -2120,6 +2186,22 @@ case ('"odpt.Station:Toei.Mita.Onarimon"'):
 		doc2= document.getElementById("ti22-21"); 
 		doc0= document.getElementById("ti22-21b");  
 		doc1= document.getElementById("ti22-21c");  
+
+	if ( index[unban1] != undefined){
+		if ( kind5 == '' ){
+		kind5 = kindna[index[unban1]].replaceAll('"','');
+		des5 = desna[index[unban1]].replaceAll('"','');
+		dep5 = newkinda[index[unban1]].replaceAll('"','');
+		num5 = desta[index[unban1]].replaceAll('"','');
+		ptf5 = from[index[unban1]].replaceAll('"','');
+
+		kind6 = kindna[index[unban1] +1 ].replaceAll('"','');
+		des6 = desna[index[unban1] +1 ].replaceAll('"','');
+		dep6 = newkinda[index[unban1] +1 ].replaceAll('"','');
+		num6 = desta[index[unban1] +1 ].replaceAll('"','');
+		ptf6 = from[index[unban1] +1 ].replaceAll('"','');
+		}
+	}
 	break ;
 
 	case ( '"odpt.Station:Toei.Mita.Shibakoen"'):	
@@ -2146,6 +2228,24 @@ case ('"odpt.Station:Toei.Mita.Shibakoen"'):
 		doc2= document.getElementById("ti23-2"); 
 		doc0= document.getElementById("ti23-2b");  
 		doc1= document.getElementById("ti23-2c");  
+
+	
+	if ( index[unban1] != undefined){
+		if ( kind5 == '' ){
+		kind5 = kindna[index[unban1]].replaceAll('"','');
+		des5 = desna[index[unban1]].replaceAll('"','');
+		dep5 = newkinda[index[unban1]].replaceAll('"','');
+		num5 = desta[index[unban1]].replaceAll('"','');
+		ptf5 = from[index[unban1]].replaceAll('"','');
+
+		kind6 = kindna[index[unban1] +1 ].replaceAll('"','');
+		des6 = desna[index[unban1] +1 ].replaceAll('"','');
+		dep6 = newkinda[index[unban1] +1 ].replaceAll('"','');
+		num6 = desta[index[unban1] +1 ].replaceAll('"','');
+		ptf6 = from[index[unban1] +1 ].replaceAll('"','');
+		}
+	}
+
 	} else {
 		nameText = document.getElementById('ti23-1a');
 		target = document.getElementById('ti23-1ad');
@@ -2161,6 +2261,22 @@ case ('"odpt.Station:Toei.Mita.Shibakoen"'):
 		doc2= document.getElementById("ti23-22"); 
 		doc0= document.getElementById("ti23-22b");  
 		doc1= document.getElementById("ti23-22c");  
+
+	if ( index[unban1] != undefined){
+		if ( kind5 == '' ){
+		kind5 = kindna[index[unban1]].replaceAll('"','');
+		des5 = desna[index[unban1]].replaceAll('"','');
+		dep5 = newkinda[index[unban1]].replaceAll('"','');
+		num5 = desta[index[unban1]].replaceAll('"','');
+		ptf5 = from[index[unban1]].replaceAll('"','');
+
+		kind6 = kindna[index[unban1] +1 ].replaceAll('"','');
+		des6 = desna[index[unban1] +1 ].replaceAll('"','');
+		dep6 = newkinda[index[unban1] +1 ].replaceAll('"','');
+		num6 = desta[index[unban1] +1 ].replaceAll('"','');
+		ptf6 = from[index[unban1] +1 ].replaceAll('"','');
+		}
+	}
 	break ;
 
 	case ( '"odpt.Station:Toei.Mita.Mita"'):	
@@ -2186,6 +2302,23 @@ case ('"odpt.Station:Toei.Mita.Mita"'):
 		doc2= document.getElementById("ti24-2"); 
 		doc0= document.getElementById("ti24-2b");  
 		doc1= document.getElementById("ti24-2c");  
+
+		
+	if ( index[unban1] != undefined){
+		if ( kind5 == '' ){
+		kind5 = kindna[index[unban1]].replaceAll('"','');
+		des5 = desna[index[unban1]].replaceAll('"','');
+		dep5 = newkinda[index[unban1]].replaceAll('"','');
+		num5 = desta[index[unban1]].replaceAll('"','');
+		ptf5 = from[index[unban1]].replaceAll('"','');
+
+		kind6 = kindna[index[unban1] +1 ].replaceAll('"','');
+		des6 = desna[index[unban1] +1 ].replaceAll('"','');
+		dep6 = newkinda[index[unban1] +1 ].replaceAll('"','');
+		num6 = desta[index[unban1] +1 ].replaceAll('"','');
+		ptf6 = from[index[unban1] +1 ].replaceAll('"','');
+		}
+	}
 	} else {
 		nameText = document.getElementById('ti24-1a');
 		target = document.getElementById('ti24-1ad');
@@ -2200,7 +2333,23 @@ case ('"odpt.Station:Toei.Mita.Mita"'):
 		target = document.getElementById('ti24-23ad');
 		doc2= document.getElementById("ti24-23"); 
 		doc0= document.getElementById("ti24-23b");  
-		doc1= document.getElementById("ti24-23c");  
+		doc1= document.getElementById("ti24-23c"); 
+
+	if ( index[unban1] != undefined){
+		if ( kind5 == '' ){
+		kind5 = kindna[index[unban1]].replaceAll('"','');
+		des5 = desna[index[unban1]].replaceAll('"','');
+		dep5 = newkinda[index[unban1]].replaceAll('"','');
+		num5 = desta[index[unban1]].replaceAll('"','');
+		ptf5 = from[index[unban1]].replaceAll('"','');
+
+		kind6 = kindna[index[unban1] +1 ].replaceAll('"','');
+		des6 = desna[index[unban1] +1 ].replaceAll('"','');
+		dep6 = newkinda[index[unban1] +1 ].replaceAll('"','');
+		num6 = desta[index[unban1] +1 ].replaceAll('"','');
+		ptf6 = from[index[unban1] +1 ].replaceAll('"','');
+		}
+	} 
 	break ;
 
 	case ( '"odpt.Station:Toei.Mita.ShirokaneTakanawa"'):	
@@ -2242,6 +2391,22 @@ case ('"odpt.Station:Toei.Mita.ShirokaneTakanawa"'):
 		doc2= document.getElementById("ti25-24"); 
 		doc0= document.getElementById("ti25-24b");  
 		doc1= document.getElementById("ti25-24c");  
+		
+		
+	if ( index[unban1] != undefined){
+		kind5 = kindna[index[unban1]].replaceAll('"','');
+		des5 = desna[index[unban1]].replaceAll('"','');
+		dep5 = newkinda[index[unban1]].replaceAll('"','');
+		num5 = desta[index[unban1]].replaceAll('"','');
+		ptf5 = from[index[unban1]].replaceAll('"','');
+
+		kind6 = kindna[index[unban1] +1 ].replaceAll('"','');
+		des6 = desna[index[unban1] +1 ].replaceAll('"','');
+		dep6 = newkinda[index[unban1] +1 ].replaceAll('"','');
+		num6 = desta[index[unban1] +1 ].replaceAll('"','');
+		ptf6 = from[index[unban1] +1 ].replaceAll('"','');
+	}
+
 	break ;
 
 
@@ -2309,7 +2474,6 @@ switch (sha.substr( 2,1 )) {
 }
 
 }
-console.log(num1 + ' '+ num2);
 	//西高島平発車案内ここから
 if (kind1 != ""){
 	if (ptf1 == "1") {
@@ -2416,8 +2580,92 @@ if (kind2 != ""){
 
 //ここまで
 
+//白金高輪北行ここから
+
+if (kind5 != ""){
+
+	if (ptf5 == "1") {
+	ptf5 = "始発"
+	} else {
+	ptf5 = ""
+	}
+
+	if (kind5 == 'odpt.TrainType:Toei.Express') {
+	kind5 = "急行"
+	document.getElementById("ti26dep11").style.backgroundColor = '#ff0000'
+	} else {
+	kind5 = "各停"
+	document.getElementById("ti26dep11").style.backgroundColor = '#0000ff'
+	}
+
+	switch (des5) {
+	case '[odpt.Station:Tokyu.Meguro.ShinItabashi]' :
+	des5 = "新板橋";
+	break;
+	case '[odpt.Station:Toei.Mita.NishiTakashimadaira]' :
+	des5 = "西高島平";
+	break;
+	case '[odpt.Station:Toei.Mita.Takashimadaira]' :
+	des5 = "高島平";
+	break;
+	case '[odpt.Station:Toei.Mita.Onarimon]' :
+	des5 = "御成門";
+	break;
+	default:
+	des5 = "―";
+	}
+}
+if (kind6 != ""){
+	if (ptf6 == "1") {
+	ptf6 = "始発"
+	} else {
+	ptf6 = ""
+	}
+
+	if (kind6 == 'odpt.TrainType:Toei.Express') {
+	kind6 = "急行"
+	document.getElementById("ti26dep21").style.backgroundColor = '#ff0000'
+	} else {
+	kind6 = "各停"
+	document.getElementById("ti26dep21").style.backgroundColor = '#0000ff'
+	}
+
+	switch (des6) {
+	case '[odpt.Station:Tokyu.Meguro.ShinItabashi]' :
+	des6 = "新板橋";
+	break;
+	case '[odpt.Station:Toei.Mita.NishiTakashimadaira]' :
+	des6 = "西高島平";
+	break;
+	case '[odpt.Station:Toei.Mita.Takashimadaira]' :
+	des6 = "高島平";
+	break;
+	case '[odpt.Station:Toei.Mita.Onarimon]' :
+	des6 = "御成門";
+	break;
+	default:
+	des6 = "―";
+	}
+}
+
+	document.getElementById("ti26dep11").innerHTML= kind5 ;
+	document.getElementById("ti26dep12").innerHTML= des5 ;
+	document.getElementById("ti26dep13").innerHTML= dep5 ;
+	document.getElementById("ti26dep14").innerHTML= num5 ;
+	document.getElementById("ti26dep15").innerHTML= ptf5 ;
+
+	document.getElementById("ti26dep21").innerHTML= kind6 ;
+	document.getElementById("ti26dep22").innerHTML= des6 ;
+	document.getElementById("ti26dep23").innerHTML= dep6 ;
+	document.getElementById("ti26dep24").innerHTML= num6 ;
+	document.getElementById("ti26dep25").innerHTML= ptf6 ;
 
 
+//ここまで
+    }
+  }
+};
+request4.send(null);
 
     }
   }
