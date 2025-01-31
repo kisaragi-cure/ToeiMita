@@ -41,7 +41,7 @@ background-color: #ffffff;
 <font face="BIZ UDゴシック,メイリオ,ＭＳ ゴシック">
 
 <nobr>
-<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024 / Ver.1.00 01/31</p>
+<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024 / Ver.1.00 02/01</p>
 
 <div style="position: absolute; top: 20px; left:10px; font-size:11pt"><p>本Webアプリが利用する公共交通データは、公共交通オープンデータセンターにおいて提供されるものです。交通事業者により提供されたデータを元に</p></div>
 <div style="position: absolute; top: 35px; left:10px; font-size:11pt"><p>していますが、必ずしも正確・完全なものとは限りません。本Webアプリの表示内容について、交通事業者への直接の問合せは行わないでください。</p></div>
@@ -846,6 +846,11 @@ if ( dest2 == undefined ){
  m = 0;
 }
 
+if ( ji == 10 ){
+	ji = '24' ;	
+} else if ( ji < 10 ){
+	ji = '0' + ji ;	
+}
 	if ( fun < 10 ){
 	fun = '0' + fun ;	
 }
@@ -859,7 +864,7 @@ for ( m = m; m < len3; m++) {
 	var dest4 = JSON.stringify(data8[m].odptdestinationStation); 
 	var dest5 = JSON.stringify(data8[m].odpttrainType); 
 
-if ( jifun <= dest3.replaceAll('"','') ){
+if ( jifun <= dest3.replaceAll('"','').replaceAll('00:','24:') ){
 	
 
 if ( kind3 == ''){
@@ -2914,6 +2919,9 @@ if (kind1 != ""){
 	case '[odpt.Station:Toei.Mita.Onarimon]' :
 	des1 = "御成門";
 	break;
+	case '[odpt.Station:Sotetsu.Main.Yamato]' :
+	des1 = "大　和";
+	break;
 	case '[odpt.Station:Sotetsu.Main.Ebina]' :
 	des1 = "海老名";
 	break;
@@ -2959,6 +2967,9 @@ if (kind2 != ""){
 	break;
 	case '[odpt.Station:Toei.Mita.Onarimon]' :
 	des2 = "御成門";
+	break;
+	case '[odpt.Station:Sotetsu.Main.Yamato]' :
+	des2 = "大　和";
 	break;
 	case '[odpt.Station:Sotetsu.Main.Ebina]' :
 	des2 = "海老名"
