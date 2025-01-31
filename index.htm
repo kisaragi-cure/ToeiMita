@@ -41,10 +41,10 @@ background-color: #ffffff;
 <font face="BIZ UDゴシック,メイリオ,ＭＳ ゴシック">
 
 <nobr>
-<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024 / Ver.1.00 02/00</p>
+<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024 / Ver.1.00 01/31</p>
 
-<div style="position: absolute; top: 20px; left:10px; font-size:11pt"><p>本Webアプリが利用する公共交通データは、公共交通オープンデータセンターにおいて提供されるものです。公共交通事業者により提供されたデータを元に</p></div>
-<div style="position: absolute; top: 35px; left:10px; font-size:11pt"><p>していますが、必ずしも正確・完全なものとは限りません。本Webアプリの表示内容について、公共交通事業者への直接の問合せは行わないでください。</p></div>
+<div style="position: absolute; top: 20px; left:10px; font-size:11pt"><p>本Webアプリが利用する公共交通データは、公共交通オープンデータセンターにおいて提供されるものです。交通事業者により提供されたデータを元に</p></div>
+<div style="position: absolute; top: 35px; left:10px; font-size:11pt"><p>していますが、必ずしも正確・完全なものとは限りません。本Webアプリの表示内容について、交通事業者への直接の問合せは行わないでください。</p></div>
 
 <div style="position: absolute; top: 65px; left:10px; font-size:11pt"><p>本Webアプリに関するお問い合わせ先(X)@cure_kisaragi</p></div>
 <br>
@@ -576,13 +576,13 @@ background-color: #ffffff;
 <div id="ti25dep12" style="position: absolute; top: 5630px; left:745px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti25dep13" style="position: absolute; top: 5630px; left:825px; color:#ffffff; font-size:12pt; ">調整中</div>
 <div id="ti25dep14" style="position: absolute; top: 5630px; left:875px; color:#ffffff; font-size:12pt; "></div>
-<div id="ti25dep15" style="position: absolute; top: 5630px; left:915px; color:#ffff00; font-size:12pt; "></div>
+<div id="ti25dep15" style="position: absolute; top: 5630px; left:915px; color:#ffffff; font-size:12pt; "></div>
 
 <div id="ti25dep21" style="position: absolute; top: 5655px; left:705px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti25dep22" style="position: absolute; top: 5655px; left:745px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti25dep23" style="position: absolute; top: 5655px; left:825px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti25dep24" style="position: absolute; top: 5655px; left:875px; color:#ffffff; font-size:12pt; "></div>
-<div id="ti25dep25" style="position: absolute; top: 5655px; left:915px; color:#ffff00; font-size:12pt; "></div>
+<div id="ti25dep25" style="position: absolute; top: 5655px; left:915px; color:#ffffff; font-size:12pt; "></div>
 <div style="position: absolute; top: 5680px; left:695px; color:#ff0000;  font-size:11pt"><p>※時刻表に掲載の内容で表示しています。</p></div>
 
 <div style="position: absolute; top: 5590px; left:105px; color:#ffffff; font-size:12pt"><p>白金高輪北行発車順序</p></div>
@@ -590,13 +590,13 @@ background-color: #ffffff;
 <div id="ti26dep12" style="position: absolute; top: 5630px; left:155px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti26dep13" style="position: absolute; top: 5630px; left:235px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti26dep14" style="position: absolute; top: 5630px; left:285px; color:#ffffff; font-size:12pt; "></div>
-<div id="ti26dep15" style="position: absolute; top: 5630px; left:335px; color:#ffff00; font-size:12pt; "></div>
+<div id="ti26dep15" style="position: absolute; top: 5630px; left:335px; color:#ffa500; font-size:12pt; "></div>
 
 <div id="ti26dep21" style="position: absolute; top: 5655px; left:115px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti26dep22" style="position: absolute; top: 5655px; left:155px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti26dep23" style="position: absolute; top: 5655px; left:235px; color:#ffffff; font-size:12pt; "></div>
 <div id="ti26dep24" style="position: absolute; top: 5655px; left:285px; color:#ffffff; font-size:12pt; "></div>
-<div id="ti26dep25" style="position: absolute; top: 5655px; left:335px; color:#ffff00; font-size:12pt; "></div>
+<div id="ti26dep25" style="position: absolute; top: 5655px; left:335px; color:#ffa500; font-size:12pt; "></div>
 <div style="position: absolute; top: 5680px; left:105px; color:#ff0000;  font-size:11pt"><p>※時刻表に掲載の内容で表示しています。</p></div>
 
 <div style="position: absolute; top: 5750px; left:1000px; font-size:18pt"><p>　</p></div>
@@ -636,8 +636,17 @@ request4.onload = () => {
   if (request4.readyState === request3.DONE) {
     if (request4.status === 200) {
 var data5 = JSON.parse(request4.responseText.replaceAll("odpt:","odpt"));
-console.log(data5);
 
+var request5 = new XMLHttpRequest();
+request5.open("GET", "https://api.odpt.org/api/v4/odpt:StationTimetable?odpt:station=odpt.Station:TokyoMetro.Namboku.ShirokaneTakanawa&acl:consumerKey=qkpjriztbhvaxwjzum1oluug1hnfvwfq3ztxnsb56xtbt6qve7zdwv8bb73ajavy", true);
+request5.responseType = "text";
+
+request5.onload = () => {
+  if (request5.readyState === request3.DONE) {
+    if (request5.status === 200) {
+var data7 = JSON.parse(request5.responseText.replaceAll("odpt:","odpt"));
+
+console.log( data7);
 
 //在線情報の処理
       let info = '';
@@ -685,6 +694,8 @@ console.log(data5);
       let day = now.getDay();
       let month = now.getMonth();
       let date = now.getDate();
+      let ji = now.getHours() ;
+      let fun = now.getMinutes();
 
 	if ( month == 0 && date > 0 && date < 4 ) {
 	day = 0;
@@ -739,9 +750,13 @@ now = now.getHours();
 if ( day > 0 && day < 6 ) {
       var data4= JSON.parse(JSON.stringify(data3[0].odptstationTimetableObject)); 
       var data6= JSON.parse(JSON.stringify(data5[1].odptstationTimetableObject)); 
+      var data8= JSON.parse(JSON.stringify(data7[3].odptstationTimetableObject)); 
+      var data9= JSON.parse(JSON.stringify(data5[3].odptstationTimetableObject)); 
 } else {
       var data4= JSON.parse(JSON.stringify(data3[1].odptstationTimetableObject)); 
       var data6= JSON.parse(JSON.stringify(data5[0].odptstationTimetableObject)); 
+      var data8= JSON.parse(JSON.stringify(data7[2].odptstationTimetableObject)); 
+      var data9= JSON.parse(JSON.stringify(data5[2].odptstationTimetableObject)); 
 }
       len3 = JSON.stringify(data4.length) ;
 if ( len3 - m > 100 && timesec != 4 ){
@@ -807,7 +822,94 @@ if ( dest2 == undefined ){
 }
 
 
+//白高南行発車(メトロ)
 
+	let kind3 = '';
+	let des3 = '';
+	let dep3 = '';
+	let num3 = '';
+	let ptf3 = '';
+
+	let kind4 = '';
+	let des4 = '';
+	let dep4 = '';
+	let num4 = '';
+	let ptf4 = '';
+
+
+      len3 = JSON.stringify(data8.length) ;
+
+
+ if ( timesec > 1 ){
+ m = 30;
+} else {
+ m = 0;
+}
+
+	if ( fun < 10 ){
+	fun = '0' + fun ;	
+}
+	let jifun = ji + ':' + fun ;
+
+
+for ( m = m; m < len3; m++) {
+
+	var dest1 = JSON.stringify(data8[m].odpttrainNumber); 
+	var dest3 = JSON.stringify(data8[m].odptdepartureTime); 
+	var dest4 = JSON.stringify(data8[m].odptdestinationStation); 
+	var dest5 = JSON.stringify(data8[m].odpttrainType); 
+
+if ( jifun <= dest3.replaceAll('"','') ){
+	
+
+if ( kind3 == ''){
+	kind3 = dest5.replaceAll('"','');
+	des3 = dest4.replaceAll('"','');
+	dep3 = dest3.replaceAll('"','');
+	num3 = dest1.replaceAll('"','').substr( -3,3 );
+	ptf3 = "南北";
+	len3 = m + 2;
+} else {
+	kind4 = dest5.replaceAll('"','');
+	des4 = dest4.replaceAll('"','');
+	dep4 = dest3.replaceAll('"','');
+	num4 = dest1.replaceAll('"','').substr( -3,3 );
+	ptf4 = "南北";
+}
+
+}
+}
+
+//白高南行発車(都営)
+ 	len3 = JSON.stringify(data8.length) ;
+
+	var destb = {};
+	var newkindb = {};
+	var kindnb = {};
+	var desnb = {};
+	var fromb = {};
+
+m = p
+for ( m = m; m < len3; m++) {
+	var dest1 = JSON.stringify(data9[m].odpttrainNumber); 
+try {
+  var dest2 = JSON.stringify(data6[m].odptplatformNumber);
+} catch (error) {
+  var dest2 = '"0"';
+}  
+if ( dest2 == undefined ){
+  dest2 = '"0"';
+}
+	var dest1 = JSON.stringify(data9[m].odpttrainNumber); 
+	var dest3 = JSON.stringify(data9[m].odptdepartureTime); 
+	var dest4 = JSON.stringify(data9[m].odptdestinationStation); 
+	var dest5 = JSON.stringify(data9[m].odpttrainType); 
+
+	desta[dest1] = dest1;
+	newkindb[dest1] = dest3;
+	kindnb[dest1] = dest5;
+	desnb[dest1] = dest4;
+}
 
 
 
@@ -1003,9 +1105,12 @@ if ( delay == "0"){
 		localStorage.removeItem( unban + 'time' );
 	} 
 	}
-
 	
+	if ( trid == '"odpt.RailDirection:Northbound"' ) {
 	hensei = localStorage.getItem( unban );
+	} else {
+	hensei = null;
+	}
 
 if ( hensei != null ){
 sha = hensei ;
@@ -2137,6 +2242,28 @@ case ('"odpt.Station:Toei.Mita.Uchisaiwaicho"'):
 		doc2= document.getElementById("ti21-22"); 
 		doc0= document.getElementById("ti21-22b");  
 		doc1= document.getElementById("ti21-22c");  
+
+		if ( des != '輪'){
+		if ( dep3 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kind3;
+		des4 = des3;
+		dep4 = dep3;
+		num4 =num3;
+		ptf4 = ptf3;
+
+		kind3 = kindnb[unban1];
+		des3 = desnb[unban1].replaceAll('"','');
+		dep3 = newkindb[unban1].replaceAll('"','');
+		num3 = unban;
+		ptf3 = '三田';
+		} else if ( dep4 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kindnb[unban1];
+		des4 = desnb[unban1].replaceAll('"','');
+		dep4 = newkindb[unban1].replaceAll('"','');
+		num4 = unban;
+		ptf4 = '三田';
+		}
+		}
 	break ;
 
 
@@ -2177,6 +2304,28 @@ case ('"odpt.Station:Toei.Mita.Onarimon"'):
 		doc2= document.getElementById("ti22-1"); 
 		doc0= document.getElementById("ti22-1b");  
 		doc1= document.getElementById("ti22-1c");  
+
+		if ( des != '輪'){
+		if ( dep3 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kind3;
+		des4 = des3;
+		dep4 = dep3;
+		num4 =num3;
+		ptf4 = ptf3;
+
+		kind3 = kindnb[unban1];
+		des3 = desnb[unban1].replaceAll('"','');
+		dep3 = newkindb[unban1].replaceAll('"','');
+		num3 = unban;
+		ptf3 = '三田';
+		} else if ( dep4 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kindnb[unban1];
+		des4 = desnb[unban1].replaceAll('"','');
+		dep4 = newkindb[unban1].replaceAll('"','');
+		num4 = unban;
+		ptf4 = '三田';
+		}
+		}
 	}
 	break ;
 
@@ -2209,7 +2358,29 @@ case ('"odpt.Station:Toei.Mita.Onarimon"'):
 		target = document.getElementById('ti22-23ad');
 		doc2= document.getElementById("ti22-23"); 
 		doc0= document.getElementById("ti22-23b");  
-		doc1= document.getElementById("ti22-23c");  
+		doc1= document.getElementById("ti22-23c");
+
+		if ( des != '輪'){
+		if ( dep3 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kind3;
+		des4 = des3;
+		dep4 = dep3;
+		num4 =num3;
+		ptf4 = ptf3;
+
+		kind3 = kindnb[unban1];
+		des3 = desnb[unban1].replaceAll('"','');
+		dep3 = newkindb[unban1].replaceAll('"','');
+		num3 = unban;
+		ptf3 = '三田';
+		} else if ( dep4 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kindnb[unban1];
+		des4 = desnb[unban1].replaceAll('"','');
+		dep4 = newkindb[unban1].replaceAll('"','');
+		num4 = unban;
+		ptf4 = '三田';
+		}
+		}  
 	break ;
 
 
@@ -2228,7 +2399,6 @@ case ('"odpt.Station:Toei.Mita.Shibakoen"'):
 		doc2= document.getElementById("ti23-2"); 
 		doc0= document.getElementById("ti23-2b");  
 		doc1= document.getElementById("ti23-2c");  
-
 	
 	if ( index[unban1] != undefined){
 		if ( kind5 == '' ){
@@ -2252,6 +2422,29 @@ case ('"odpt.Station:Toei.Mita.Shibakoen"'):
 		doc2= document.getElementById("ti23-1"); 
 		doc0= document.getElementById("ti23-1b");  
 		doc1= document.getElementById("ti23-1c");  
+
+		if ( des != '輪'){
+		if ( dep3 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kind3;
+		des4 = des3;
+		dep4 = dep3;
+		num4 =num3;
+		ptf4 = ptf3;
+
+		kind3 = kindnb[unban1];
+		des3 = desnb[unban1].replaceAll('"','');
+		dep3 = newkindb[unban1].replaceAll('"','');
+		num3 = unban;
+		ptf3 = '三田';
+		} else if ( dep4 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kindnb[unban1];
+		des4 = desnb[unban1].replaceAll('"','');
+		dep4 = newkindb[unban1].replaceAll('"','');
+		num4 = unban;
+		ptf4 = '三田';
+		}
+		}
+		
 	}
 	break ;
 
@@ -2285,6 +2478,28 @@ case ('"odpt.Station:Toei.Mita.Shibakoen"'):
 		doc2= document.getElementById("ti23-24"); 
 		doc0= document.getElementById("ti23-24b");  
 		doc1= document.getElementById("ti23-24c");  
+
+		if ( des != '輪'){
+		if ( dep3 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kind3;
+		des4 = des3;
+		dep4 = dep3;
+		num4 =num3;
+		ptf4 = ptf3;
+
+		kind3 = kindnb[unban1];
+		des3 = desnb[unban1].replaceAll('"','');
+		dep3 = newkindb[unban1].replaceAll('"','');
+		num3 = unban;
+		ptf3 = '三田';
+		} else if ( dep4 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kindnb[unban1];
+		des4 = desnb[unban1].replaceAll('"','');
+		dep4 = newkindb[unban1].replaceAll('"','');
+		num4 = unban;
+		ptf4 = '三田';
+		}
+		}
 	break ;
 
 	default:
@@ -2325,6 +2540,28 @@ case ('"odpt.Station:Toei.Mita.Mita"'):
 		doc2= document.getElementById("ti24-1"); 
 		doc0= document.getElementById("ti24-1b");  
 		doc1= document.getElementById("ti24-1c");  
+
+		if ( des != '輪'){
+		if ( dep3 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kind3;
+		des4 = des3;
+		dep4 = dep3;
+		num4 =num3;
+		ptf4 = ptf3;
+
+		kind3 = kindnb[unban1];
+		des3 = desnb[unban1].replaceAll('"','');
+		dep3 = newkindb[unban1].replaceAll('"','');
+		num3 = unban;
+		ptf3 = '三田';
+		} else if ( dep4 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kindnb[unban1];
+		des4 = desnb[unban1].replaceAll('"','');
+		dep4 = newkindb[unban1].replaceAll('"','');
+		num4 = unban;
+		ptf4 = '三田';
+		}
+		}
 	}
 	break ;
 
@@ -2358,6 +2595,28 @@ case ('"odpt.Station:Toei.Mita.Mita"'):
 		doc2= document.getElementById("ti24-25"); 
 		doc0= document.getElementById("ti24-25b");  
 		doc1= document.getElementById("ti24-25c");  
+
+		if ( des != '輪'){
+		if ( dep3 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kind3;
+		des4 = des3;
+		dep4 = dep3;
+		num4 =num3;
+		ptf4 = ptf3;
+
+		kind3 = kindnb[unban1];
+		des3 = desnb[unban1].replaceAll('"','');
+		dep3 = newkindb[unban1].replaceAll('"','');
+		num3 = unban;
+		ptf3 = '三田';
+		} else if ( dep4 >  newkindb[unban1].replaceAll('"','')){
+		kind4 = kindnb[unban1];
+		des4 = desnb[unban1].replaceAll('"','');
+		dep4 = newkindb[unban1].replaceAll('"','');
+		num4 = unban;
+		ptf4 = '三田';
+		}
+		}
 	break ;
 
 
@@ -2580,6 +2839,116 @@ if (kind2 != ""){
 
 //ここまで
 
+//白金高輪南行ここから
+if (kind3 != ""){
+
+	if (ptf3 == "南北") {
+	ptf3 = "←南北"
+	document.getElementById("ti25dep15").style.backgroundColor = '#008080'
+	} else {
+	ptf3 = "三田→"
+	document.getElementById("ti25dep15").style.backgroundColor = '#0000cd'
+	}
+
+	if (kind3 == 'odpt.TrainType:TokyoMetro.Express' || kind3 == 'odpt.TrainType:Toei.Express') {
+	kind3 = "急行"
+	document.getElementById("ti25dep11").style.backgroundColor = '#ff0000'
+	} else {
+	kind3 = "各停"
+	document.getElementById("ti25dep11").style.backgroundColor = '#0000ff'
+	}
+
+	switch (des3) {
+	case '[odpt.Station:Tokyu.Meguro.Hiyoshi]' :
+	des3 = "日　吉"
+	break;
+	case '[odpt.Station:TokyoMetro.Namboku.Meguro]' :
+	des3 = "目　黒";
+	break;
+	case '[odpt.Station:Tokyu.Meguro.Okusawa]' :
+	des3 = "奥　沢";
+	break;
+	case '[odpt.Station:Sotetsu.Main.Ebina]' :
+	des3 = "海老名"
+	break;
+	case '[odpt.Station:Tokyu.Meguro.MusashiKosugi]' :
+	des3 = "武蔵小杉"
+	break;
+	case '[odpt.Station:Tokyu.TokyuShinYokohama.ShinYokohama]' :
+	des3 = "新横浜"
+	break;
+	case '[odpt.Station:Sotetsu.Izumino.Shonandai]':
+	des3 = "湘南台";
+	break;
+	case '[odpt.Station:Sotetsu.SotetsuShinYokohama.Nishiya]':
+	des3 = "西　谷";
+	break;
+	default:
+	des3 = "―";
+	}
+}
+
+if (kind4 != ""){
+
+	if (ptf4 == "南北") {
+	ptf4 = "←南北"
+	document.getElementById("ti25dep25").style.backgroundColor = '#008080'
+	} else {
+	ptf4 = "三田→"
+	document.getElementById("ti25dep25").style.backgroundColor = '#0000cd'
+	}
+
+	if (kind4 == 'odpt.TrainType:TokyoMetro.Express' || kind4 == 'odpt.TrainType:Toei.Express') {
+	kind4 = "急行"
+	document.getElementById("ti25dep21").style.backgroundColor = '#ff0000'
+	} else {
+	kind4 = "各停"
+	document.getElementById("ti25dep21").style.backgroundColor = '#0000ff'
+	}
+
+	switch (des4) {
+	case '[odpt.Station:Tokyu.Meguro.Hiyoshi]' :
+	des4 = "日　吉"
+	break;
+	case '[odpt.Station:TokyoMetro.Namboku.Meguro]' :
+	des4 = "目　黒";
+	break;
+	case '[odpt.Station:Tokyu.Meguro.Okusawa]' :
+	des4 = "奥　沢";
+	break;
+	case '[odpt.Station:Sotetsu.Main.Ebina]' :
+	des4 = "海老名"
+	break;
+	case '[odpt.Station:Tokyu.Meguro.MusashiKosugi]' :
+	des4 = "武蔵小杉"
+	break;
+	case '[odpt.Station:Tokyu.TokyuShinYokohama.ShinYokohama]' :
+	des4 = "新横浜"
+	break;
+	case '[odpt.Station:Sotetsu.Izumino.Shonandai]':
+	des4 = "湘南台";
+	break;
+	case '[odpt.Station:Sotetsu.SotetsuShinYokohama.Nishiya]':
+	des4 = "西　谷";
+	break;
+	default:
+	des4 = "―";
+	}
+}
+
+	document.getElementById("ti25dep11").innerHTML= kind3 ;
+	document.getElementById("ti25dep12").innerHTML= des3 ;
+	document.getElementById("ti25dep13").innerHTML= dep3 ;
+	document.getElementById("ti25dep14").innerHTML= num3 ;
+	document.getElementById("ti25dep15").innerHTML= ptf3 ;
+
+	document.getElementById("ti25dep21").innerHTML= kind4 ;
+	document.getElementById("ti25dep22").innerHTML= des4 ;
+	document.getElementById("ti25dep23").innerHTML= dep4 ;
+	document.getElementById("ti25dep24").innerHTML= num4 ;
+	document.getElementById("ti25dep25").innerHTML= ptf4 ;
+
+//ここまで
 //白金高輪北行ここから
 
 if (kind5 != ""){
@@ -2599,7 +2968,7 @@ if (kind5 != ""){
 	}
 
 	switch (des5) {
-	case '[odpt.Station:Tokyu.Meguro.ShinItabashi]' :
+	case '[odpt.Station:Toei.Mita.ShinItabashi]' :
 	des5 = "新板橋";
 	break;
 	case '[odpt.Station:Toei.Mita.NishiTakashimadaira]' :
@@ -2631,7 +3000,7 @@ if (kind6 != ""){
 	}
 
 	switch (des6) {
-	case '[odpt.Station:Tokyu.Meguro.ShinItabashi]' :
+	case '[odpt.Station:Toei.Mita.ShinItabashi]' :
 	des6 = "新板橋";
 	break;
 	case '[odpt.Station:Toei.Mita.NishiTakashimadaira]' :
@@ -2662,6 +3031,11 @@ if (kind6 != ""){
 
 
 //ここまで
+
+    }
+  }
+};
+request5.send(null);
     }
   }
 };
@@ -2701,11 +3075,6 @@ let info = '';
       let kind3 = '';
       let unban = '';
       let unban1 = '';
-      let des = '';
-      let des2 = '';
-      let stid = '';
-      let scid = '';
-      let trid = '';
       let sha = '';
       let hensei = '';
       let delay = '';
@@ -2813,18 +3182,6 @@ case '"急"' :
 }
 
 	break;
-case '"副"':
-	sha = "(F" ;
-	if ( hensei > 80) {
-	hensei =  "7" + hensei + ")" ;
-	} else if ( hensei > 40) {
-	hensei = hensei - 40 + 100 ;
-	hensei =  hensei + ")" ;
-	} else if ( hensei < 40) {
-	hensei = hensei - 20 + 700 ;
-	hensei = hensei + ")" ;
-	}
-	break;
 case '"相"':
 	sha = "(G" ;
 
@@ -2836,31 +3193,6 @@ case '"相"':
 	hensei =  hensei + ")" ;
 	break;
 }
-case '"み"':
-	sha = "(Y" ;
-	hensei = hensei - 80 + 510 ;
-	hensei =  hensei + ")" ;
-	break;
-case '"西"':
-	sha = "(M" ;
-	if ( hensei < 60) {
-	hensei =   "6" + hensei + ")" ;
-	} else if ( hensei < 70) {
-	hensei = hensei - 50 + 400 ;
-	hensei =  hensei + ")" ;
-	} else {
-	hensei = hensei - 24 + 400 ;
-	hensei =  hensei + ")" ;
-	}
-	break;
-case '"東"':
-	sha = "(T" ;
-	if ( hensei < 70) {
-	hensei =   "9" + hensei + ")" ;
-	} else {
-	hensei =   "5" + hensei + ")" ;
-	}
-	break;
 case '"南"':
 	sha = "(N" ;
 	if ( hensei < 11) {
@@ -2889,7 +3221,7 @@ case 'null':
 
 
 
-if ( unban1 > 200 ){
+if ( unban1 > 200  &&  unban1 < 700){
 	localStorage.setItem( unban , sha + hensei );
 	localStorage.setItem( unban + 'time' , now );
 }
