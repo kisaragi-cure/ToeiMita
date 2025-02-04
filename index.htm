@@ -748,12 +748,12 @@ now = now.getHours();
 	var kindn = {};
 	var desn = {};
 if ( day > 0 && day < 6 ) {
-      var data4= JSON.parse(JSON.stringify(data3[0].odptstationTimetableObject)); 
+      var data4= JSON.parse(JSON.stringify(data3[1].odptstationTimetableObject)); 
       var data6= JSON.parse(JSON.stringify(data5[1].odptstationTimetableObject)); 
       var data8= JSON.parse(JSON.stringify(data7[3].odptstationTimetableObject)); 
       var data9= JSON.parse(JSON.stringify(data5[3].odptstationTimetableObject)); 
 } else {
-      var data4= JSON.parse(JSON.stringify(data3[1].odptstationTimetableObject)); 
+      var data4= JSON.parse(JSON.stringify(data3[0].odptstationTimetableObject)); 
       var data6= JSON.parse(JSON.stringify(data5[0].odptstationTimetableObject)); 
       var data8= JSON.parse(JSON.stringify(data7[2].odptstationTimetableObject)); 
       var data9= JSON.parse(JSON.stringify(data5[2].odptstationTimetableObject)); 
@@ -774,6 +774,7 @@ for ( m = m; m < len3; m++) {
 	newkind[dest1] = dest3;
 	kindn[dest1] = dest5;
 	desn[dest1] = dest4;
+
 }
 
 //白高北行発車
@@ -846,7 +847,7 @@ if ( dest2 == undefined ){
  m = 0;
 }
 
-if ( ji == 10 ){
+if ( ji == 0 ){
 	ji = '24' ;	
 } else if ( ji < 10 ){
 	ji = '0' + ji ;	
@@ -881,6 +882,7 @@ if ( kind3 == ''){
 	num4 = dest1.replaceAll('"','').substr( -3,3 );
 	ptf4 = "南北";
 }
+console.log( dest1 + dest2 + dest3+ dest4 + dest5 ) ;
 
 }
 }
