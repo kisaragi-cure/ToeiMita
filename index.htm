@@ -30,6 +30,12 @@ background-color: #ffffff;
     font-size: 14pt;
     width: 155px;
 }
+.asakusabutton{
+    width: 120px;
+    height: 2em;
+    padding: 7px;
+    font-size: 14pt;
+}
 
 
 </style>
@@ -41,7 +47,7 @@ background-color: #ffffff;
 <font face="BIZ UDゴシック,メイリオ,ＭＳ ゴシック">
 
 <nobr>
-<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024 / Ver.1.00 02/01</p>
+<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024 / Ver.1.1 02/07</p>
 
 <div style="position: absolute; top: 20px; left:10px; font-size:11pt"><p>本Webアプリが利用する公共交通データは、公共交通オープンデータセンターにおいて提供されるものです。交通事業者により提供されたデータを元に</p></div>
 <div style="position: absolute; top: 35px; left:10px; font-size:11pt"><p>していますが、必ずしも正確・完全なものとは限りません。本Webアプリの表示内容について、交通事業者への直接の問合せは行わないでください。</p></div>
@@ -551,6 +557,8 @@ background-color: #ffffff;
 <div id="ti24-2" style="position: absolute; top: 5230px; left:477px; font-size:12pt; "></div>
 <div id="ti24-2c" style="position: absolute; top: 5285px; left:470px; font-size:12pt; color:#FF0000; "></div>
 
+<div style="position: absolute; top: 5250px; left:650px; font-size:24pt"><input type="button" id = "asakusa" value="都営浅草線" class="asakusabutton"></div>
+
 <!三田-白金高輪>
 <div id="ti24-25ad" style="position: absolute; top:-100px; left:-100px;"><input type="text"  id = "ti24-25a" disabled / name="address" size="14" value=""　></div>
 <div id="ti24-25b" style="position: absolute; top: 5330px; left:560px; font-size:12pt; "></div>
@@ -609,6 +617,10 @@ background-color: #ffffff;
 
 
 ///////////////////////////////ここから三田線
+
+document.getElementById("asakusa").addEventListener("click", function () {
+  location.href ="https://kisaragi-cure.github.io/ToeiAsakusa";
+}, false);
 
 var request = new XMLHttpRequest();
 request.open("GET", "https://api.odpt.org/api/v4/odpt:Train?odpt:railway=odpt.Railway:Toei.Mita&acl:consumerKey=qkpjriztbhvaxwjzum1oluug1hnfvwfq3ztxnsb56xtbt6qve7zdwv8bb73ajavy", true);
