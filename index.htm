@@ -871,10 +871,16 @@ if ( ji == 0 ){
 
 for ( m = m; m < len3; m++) {
 
+try{
 	var dest1 = JSON.stringify(data8[m].odpttrainNumber); 
 	var dest3 = JSON.stringify(data8[m].odptdepartureTime); 
 	var dest4 = JSON.stringify(data8[m].odptdestinationStation); 
 	var dest5 = JSON.stringify(data8[m].odpttrainType); 
+
+}catch(e){
+    //例外が発生した場合の処理
+}
+
 
 if ( jifun < dest3.replaceAll('"','').replaceAll('00:','24:') ){
 	
@@ -3527,4 +3533,3 @@ request2.send(null);
 
   </body>
 </html>
-
