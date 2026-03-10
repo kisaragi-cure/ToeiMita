@@ -46,7 +46,7 @@ background-color: #ffffff;
   <body>
 
 <nobr>
-<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024-2025 / Ver.1.2 09/11</p>
+<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024-2026 / Ver.2.00 03/10</p>
 
 <div style="position: absolute; top: 20px; left:10px; font-size:10pt"><p>本Webアプリが利用する公共交通データは、公共交通オープンデータセンターにおいて提供されるものです。交通事業者により提供されたデータを元に</p></div>
 <div style="position: absolute; top: 35px; left:10px; font-size:10pt"><p>していますが、必ずしも正確・完全なものとは限りません。本Webアプリの表示内容について、交通事業者への直接の問合せは行わないでください。</p></div>
@@ -59,6 +59,7 @@ background-color: #ffffff;
 <br>
 <div id="ty99d" style="position: absolute; top: -50px; left:-50px; font-size:18pt"　><input type="text"  id = "ty99" disabled / name="address" size="100" value="試験"　></div>
 
+<div id="koshin-T" style="position: absolute; top: 80px; left:370px; color:#000000; font-size:12pt; ">都営更新：ー</div>
 
 <!西高島平発車>
 <div style="position: absolute; top: 120px; left:690px; color:#ffffff; font-size:12pt"><p>西高島平発車順序</p></div>
@@ -628,7 +629,8 @@ request.responseType = "text";
 request.onload = () => {
   if (request.readyState === request.DONE) {
     if (request.status === 200) {
-var data = JSON.parse(request.responseText.replaceAll("odpt:","odpt"));
+var data0 = request.responseText.replaceAll("dc:","dc");
+var data = JSON.parse(data0.replaceAll("odpt:","odpt"));
 
 var request3 = new XMLHttpRequest();
 request3.open("GET", "https://api-public.odpt.org/api/v4/odpt:StationTimetable?odpt:station=odpt.Station:Toei.Mita.NishiTakashimadaira", true);
@@ -657,7 +659,17 @@ request5.onload = () => {
     if (request5.status === 200) {
 var data7 = JSON.parse(request5.responseText.replaceAll("odpt:","odpt"));
 
-console.log( data );
+
+//更新時刻
+var koshinT = JSON.stringify(data[0].dcdate) ;
+koshinT = "都営更新：" + koshinT.replaceAll('-','/');
+koshinT =  koshinT.replaceAll('T',' ');
+koshinT =  koshinT.replaceAll('+09:00','');
+koshinT =  koshinT.replaceAll('"','');
+
+console.log(koshinT);
+document.getElementById("koshin-T").innerHTML = koshinT ;
+
 
 //在線情報の処理
       let info = '';
@@ -3319,216 +3331,8 @@ request3.send(null);
 request.send(null);
 
 </script>
-<script type="module" >
-
-/////////////////////////////////////ここから目黒線
-
-var request2 = new XMLHttpRequest();
-request2.open("GET", "https://tokyu-tid.s3.amazonaws.com/meguro.json", true);
-request2.responseType = "text";
-
-request2.onload = () => {
-  if (request2.readyState === request2.DONE) {
-    if (request2.status === 200) {
-var data2 = JSON.parse(request2.responseText);
-
-//在線情報の処理
-let info = '';
-      let len = '';
-
-      let kind = '';
-      let kind2 = '';
-      let kind3 = '';
-      let unban = '';
-      let unban1 = '';
-      let sha = '';
-      let hensei = '';
-      let delay = '';
-      let line = '';
-      let cars = '';
-      let dai = 0;
-      let n = 0;
-      let q2 = 0;
-      let n1 = 0;
-      let p = 5;
-      let p1 = 250;
-
-let now = Math.floor(Date.now() / 60000) ;
-	var N  = {};
-
-      len = JSON.stringify(data2.trains.length) ;
-
-	let nameText = document.getElementById('ty01-3a');
-
-var requesta = {};
-var dataa = {};
-
-for ( n = 0; n < len; n++) {
-
-      unban = JSON.stringify(data2.trains[n].operation_number) ;
-      unban1 = JSON.stringify(data2.trains[n].operation_number) ;
-      sha= JSON.stringify(data2.trains[n].affiliation) ;
-
-//運番設定
-	if (unban < 10){
-unban = "0" + unban + "K" ;
-} else if(unban < 99){
-unban = unban + "K" ;
-} else if(unban < 110){
-unban = "0" +(unban - 100) +  "M" ;
-} else if(unban < 199){
-unban = (unban - 100) + "M" ;
-} else if(unban < 210){
-unban = "0" + (unban - 200)  + "K" ;
-} else if(unban < 299){
-unban = (unban - 200) + "K" ;
-} else if(unban < 310){
-unban = "0" + (unban - 300)  + "S" ;
-} else if(unban < 399){
-unban = (unban - 300) + "S" ;
-} else if(unban < 410){
-unban = "0" + (unban - 400)  + "T" ;
-} else if(unban < 499){
-unban = (unban - 400) + "T" ;
-} else if(unban < 510){
-unban = "0" + (unban - 500)  + "M" ;
-} else if(unban < 599){
-unban =(unban - 500) + "M" ;
-} else if(unban < 610){
-unban = "0" + (unban - 600)  + "G" ;
-} else if(unban < 699){
-unban = (unban - 600) + "G" ;
-} else if(unban < 710){
-unban = "0" + (unban - 700)  + "S" ;
-} else if(unban < 799){
-unban = (unban - 700) + "S" ;
-} else if(unban < 810){
-unban = "0" + (unban - 800)  + "T" ;
-} else if(unban < 899){
-unban = (unban - 800) + "T" ;
-} else if(unban < 910){
-unban = "0" + (unban - 900)  + "G" ;
-} else if(unban < 999){
-unban = (unban - 900) + "G" ;
-}
 
 
-      cars= JSON.stringify(data2.trains[n].num_of_cars) ;
-
-//所属編成設定
-      line = JSON.stringify(data2.trains[n].train_line_id); 
-      hensei= JSON.stringify(data2.trains[n].train_orchestration_number).replace('"','').replace('"','') ;
-
-switch (sha) {
-
-case '"急"' :
-	sha = "(K" ;
-	if ( line == 26001 ){
-
-	if ( hensei == 87){
-	sha = "(Y" ;
-	hensei = "517)" ;
-	} else if ( hensei > 50) {
-	hensei = "5" + hensei + ")" ;
-	} else if ( hensei < 20) {
-	hensei = "4" + hensei + ")" ;
-	} else  {
-	hensei = hensei - 20 + 500 ;
-	hensei = hensei + ")" ;
-	}
-
-} else {
-	if ( hensei > 30) {
-	hensei = hensei - (-550) ;
-	hensei = hensei + ")" ;
-	} else if ( hensei < 30) {
-	hensei = "3" + hensei + ")" ;
-	}
-
-}
-
-	break;
-case '"相"':
-	sha = "(G" ;
-
-	if ( line == 26001 ){
-	hensei = "2" + hensei + ")" ;
-	break;
-} else {
-	hensei = hensei - (-210) ;
-	hensei =  hensei + ")" ;
-	break;
-}
-case '"南"':
-	sha = "(N" ;
-	if ( hensei < 11) {
-	hensei =   "M" + hensei + ")" ;
-	} else {
-	hensei =  "9" + hensei + ")" ;
-	}
-	break;
-case '"都"':
-	sha = "(T" ;
-	if ( hensei < 20) {
-	hensei =   "5" + hensei + ")" ;
-	} else {
-	hensei = hensei - 20 + 300 ;
-	hensei =  hensei + ")" ;
-	}
-	break;
-case 'null':
-	if (hensei == "00" || hensei == "null"){
-	sha = "　　" ;
-	hensei = "　" ;
-	}
-	break;
-}
-
-
-
-
-if ( unban1 > 200  &&  unban1 < 700){
-	localStorage.setItem( unban , sha + hensei );
-	localStorage.setItem( unban + 'time' , now );
-}
-
-
-
-
-if ( nameText == 0 ){
-} else {
-
-if ( dai == 1){
-doc0.style.backgroundColor = '#98fb98'; //背景
-}
-
-
-}
-
-}
-
-
-
-function sleepSetInterval(ms, callback, count) {
-  let i = 0;
-  const interval = setInterval(() => {
-    callback();
-    i++;
-    if (i === count) {
-      clearInterval(interval);
-    }
-  }, ms);
-}
-
-
-    }
-  }
-};
-
-request2.send(null);
-
-
-</script>
 
 
   </body>
