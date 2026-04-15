@@ -45,8 +45,12 @@ background-color: #ffffff;
 
   <body>
 
+<!バージョン情報>
+<! 2026/04/15 2.01 三田行き対応>
+
+
 <nobr>
-<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024-2026 / Ver.2.00 03/10</p>
+<p> 都営三田線　[自動更新：15秒]　　　　　　　　　　　　　　　　　　　　　　　　(C)Cure_kisaragi 2024-2026 / Ver.2.01 04/15</p>
 
 <div style="position: absolute; top: 20px; left:10px; font-size:10pt"><p>本Webアプリが利用する公共交通データは、公共交通オープンデータセンターにおいて提供されるものです。交通事業者により提供されたデータを元に</p></div>
 <div style="position: absolute; top: 35px; left:10px; font-size:10pt"><p>していますが、必ずしも正確・完全なものとは限りません。本Webアプリの表示内容について、交通事業者への直接の問合せは行わないでください。</p></div>
@@ -995,8 +999,14 @@ case '["odpt.Station:Toei.Mita.ShinItabashi"]':
 case '["odpt.Station:Toei.Mita.Motohasunuma"]':
 	des = "本";
 	break;
+case '["odpt.Station:Toei.Mita.Hibiya"]':
+	des = "比";
+	break;
 case '["odpt.Station:Toei.Mita.Onarimon"]':
 	des = "御";
+	break;
+case '["odpt.Station:Toei.Mita.Mita"]':
+	des = "三";
 	break;
 case '["odpt.Station:Toei.Mita.ShirokaneTakanawa"]':
 	des = "輪";
